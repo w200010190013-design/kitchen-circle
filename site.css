@@ -1,6 +1,6 @@
-/* Kitchen Circle — page styles. Extends styles.css (fonts, warm off-white background, header pills). */
+/* Kitchen Circle — page styles. Extends styles.css (spec fonts, lavender background, header pills). */
 @font-face{font-family:'DM Sans';src:url('DMSans-Medium.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap}
-:root{--surface:#fbfaf7;--surface-2:#efece6;--line:rgba(47,48,51,.16);--line-2:rgba(47,48,51,.36);--muted:rgba(47,48,51,.74);--accent:#625a78;--accent-2:#514a66;--accent-soft:#eceaf0;--error:#b3261e;--r-sm:8px;--r-md:12px;--r-lg:16px;--ease:150ms ease}
+:root{--surface:#f7f8fa;--surface-2:#eef0f8;--line:rgba(8,9,9,.14);--line-2:rgba(8,9,9,.32);--muted:rgba(8,9,9,.64);--accent:#5b48a3;--accent-2:#493a86;--accent-soft:#f1effa;--error:#b3261e;--r-sm:8px;--r-md:12px;--r-lg:16px;--ease:150ms ease}
 html{scroll-behavior:smooth;color-scheme:light}
 body{background:var(--background);font-size:clamp(15px,1.05vw,18px);line-height:1.55}
 [id]{scroll-margin-top:24px}
@@ -24,11 +24,11 @@ h3{font-weight:500;font-size:clamp(16px,1.2vw,20px);line-height:1.3}
 .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 20px;border-radius:var(--r-sm);border:1px solid transparent;font:inherit;font-weight:500;font-size:clamp(15px,1vw,17px);line-height:1;cursor:pointer;text-decoration:none;transition:background-color var(--ease),border-color var(--ease),color var(--ease)}
 .btn-primary{background:var(--accent);color:#fff;border-color:var(--accent)}
 .btn-primary:hover{background:var(--accent-2);border-color:var(--accent-2)}
-.btn-primary:active{background:#443e57;border-color:#443e57}
+.btn-primary:active{background:#3e3172;border-color:#3e3172}
 .btn-secondary{background:transparent;color:var(--foreground);border-color:var(--line-2)}
 .btn-secondary:hover{background:var(--surface);border-color:var(--foreground)}
 .btn-light{background:#fff;color:var(--foreground);border-color:#fff}
-.btn-light:hover{background:#e7e4de;border-color:#e7e4de}
+.btn-light:hover{background:#e6e3f5;border-color:#e6e3f5}
 .text-link{font-weight:500;color:var(--foreground);text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--line-2);transition:text-decoration-color var(--ease)}
 .text-link:hover{text-decoration-color:currentColor}
 .btn:focus-visible,.text-link:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,.endbar a:focus-visible,.page-footer a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
@@ -93,9 +93,9 @@ label{display:grid;gap:6px;font-weight:500;font-size:clamp(13px,.9vw,15px)}
 .help{font-weight:400;font-size:clamp(12px,.85vw,14px);color:var(--muted)}
 input,select,textarea{font:inherit;font-size:clamp(15px,1vw,17px);color:var(--foreground);background:#fff;border:1px solid var(--line-2);border-radius:var(--r-sm);padding:10px 12px;width:100%;min-height:44px;margin:0;transition:border-color var(--ease)}
 input:hover,select:hover,textarea:hover{border-color:var(--foreground)}
-input::placeholder,textarea::placeholder{color:rgba(47,48,51,.4)}
+input::placeholder,textarea::placeholder{color:rgba(8,9,9,.4)}
 textarea{min-height:96px;resize:vertical}
-select{appearance:none;-webkit-appearance:none;padding-right:36px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%232f3033' stroke-width='1.6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+select{appearance:none;-webkit-appearance:none;padding-right:36px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23080909' stroke-width='1.6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
 fieldset{border:0;padding:0;margin:0;min-width:0}
 legend{padding:0;margin-bottom:8px;font-weight:500;font-size:clamp(13px,.9vw,15px)}
 .chips-check{display:flex;flex-wrap:wrap;gap:8px}
@@ -108,16 +108,16 @@ legend{padding:0;margin-bottom:8px;font-weight:500;font-size:clamp(13px,.9vw,15p
 .success h3{font-family:Epilogue,Arial,sans-serif;font-weight:900;font-size:clamp(22px,1.8vw,30px)}
 
 /* mentors: one dark feature block */
-.mentor{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:5vw;background:var(--foreground);color:#edeae4;border-radius:var(--r-lg);padding:clamp(24px,3vw,48px)}
-.mentor .eyebrow{color:rgba(237,234,228,.6)}
+.mentor{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:5vw;background:var(--foreground);color:#e9e7f3;border-radius:var(--r-lg);padding:clamp(24px,3vw,48px)}
+.mentor .eyebrow{color:rgba(233,231,243,.6)}
 .mentor h2{color:#fff}
-.mentor .lede{color:rgba(237,234,228,.78)}
+.mentor .lede{color:rgba(233,231,243,.78)}
 .mentor form{display:grid;gap:16px}
 .mentor label{color:#fff}
-.mentor input{background:transparent;border-color:rgba(237,234,228,.4);color:#fff}
+.mentor input{background:transparent;border-color:rgba(233,231,243,.4);color:#fff}
 .mentor input:hover{border-color:#fff}
-.mentor input::placeholder{color:rgba(237,234,228,.45)}
-.mentor .fine{color:rgba(237,234,228,.65)}
+.mentor input::placeholder{color:rgba(233,231,243,.45)}
+.mentor .fine{color:rgba(233,231,243,.65)}
 
 /* page footer */
 .page-footer{padding-block:40px 24px;border-top:1px solid var(--line);display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:6vw;font-size:clamp(13px,.85vw,14px);line-height:1.55;color:var(--muted)}
