@@ -47,7 +47,7 @@
     <div class="intro-grid">
       <div>
         <p class="eyebrow">Free weekly cook-together · RMIT City</p>
-        <h2>a free weekly cooking circle for students who just arrived in melbourne.</h2>
+        <h2 id="headline">a free weekly cooking circle for students who just arrived in melbourne.</h2>
         <p class="lede">A 90-minute cooking circle led by a senior student from your part of the world. Rescued fresh produce, the staples you actually cook with, and 3–4 meals to take home. No forms about money. No queue.</p>
         <div class="actions">
           <a class="btn btn-primary" href="#reserve" id="cta-primary">Reserve my free seat</a>
@@ -130,7 +130,7 @@
         <div class="faq">
           <details><summary>Is it really free?</summary><p>Yes during the pilot. We plan to cook with rescued produce plus a small staples budget; supply is still being arranged. If the circle continues, we would test a $2–3 co-payment per circle, never more.</p></details>
           <details><summary>I can't cook at all. Is that a problem?</summary><p>That's the point. Every circle teaches one skill in ten minutes, and your mentor will be a senior student who once started from scratch too.</p></details>
-          <details><summary>Who sees my answers?</summary><p>In this prototype, nobody: your answers stay in your own browser. When the pilot opens, only the student team would see them. We never ask about visa, income or work hours.</p></details>
+          <details><summary>Who sees my answers?</summary><p>Only the student project team. Your answers go to a private Google Sheet that only the team can open, and we delete them when the course ends in December 2026. We never ask about visa, income or work hours.</p></details>
         </div>
       </div>
       <div>
@@ -157,13 +157,13 @@
             </div>
           </fieldset>
           <div class="actions" style="margin-top:0"><button class="btn btn-primary" type="submit" id="submit-btn">Reserve my free seat</button></div>
-          <p class="fine" id="form-note" aria-live="polite">No proof of need, ever. Halal, vegetarian and vegan options at every circle.</p>
+          <p class="fine" id="form-note" aria-live="polite">No proof of need, ever. By reserving you agree that the student project team stores these answers in a private sheet until December 2026.</p>
         </form>
         <div class="panel success" id="success" hidden>
           <p class="eyebrow">Seat reserved</p>
           <h3 id="success-title">You're in.</h3>
-          <p id="success-text">Thanks for reserving. This page is a prototype for a university project, so no message is sent yet. When the pilot opens, your mentor would send the menu and the kitchen location on Sunday.</p>
-          <p class="fine">Your reservation is saved on this device only.</p>
+          <p id="success-text">Thanks for reserving. Your interest is now recorded with the student team. This is a university project and the pilot is not confirmed yet; if it runs, we will message you on the Sunday before with the menu and the kitchen location.</p>
+          <p class="fine">All entries are deleted when the course ends in December 2026.</p>
           <div class="actions" style="margin-top:0"><button class="btn btn-secondary" type="button" id="another">Reserve for a friend</button></div>
         </div>
       </div>
@@ -182,7 +182,7 @@
         <label for="m-contact"><span class="lbl">Email <span class="req" aria-hidden="true">*</span></span><input id="m-contact" name="mentorContact" type="email" required placeholder="you@student.rmit.edu.au"></label>
         <label for="m-dish">A dish you can teach<input id="m-dish" name="mentorDish" type="text" placeholder="Dal tadka, 西红柿炒蛋, adobo…"></label>
         <div class="actions" style="margin-top:0"><button class="btn btn-light" type="submit" id="m-submit">Sign up as a mentor</button></div>
-        <p class="fine" id="m-note" aria-live="polite">Prototype: your interest is saved on this device only.</p>
+        <p class="fine" id="m-note" aria-live="polite">We keep your name and email in the team’s private sheet until December 2026.</p>
       </form>
     </div>
   </section>
@@ -190,7 +190,7 @@
   <footer class="page-footer">
     <div>
       <p><strong>Kitchen Circle is a student prototype</strong> built for BUSM4550 Innovation Management at RMIT University, Semester 2 2026. It is not an official RMIT or RUSU service, and the pilot is subject to kitchen and food-safety approval.</p>
-      <p>Privacy: this page is a prototype. Your answers are saved only in this browser on your own device and are not sent to us. Sources for the figures above: Kent et al. (2025) doi:10.1002/hpja.70037; Kent et al. (2022) doi:10.3390/nu14193956; Waite et al. (2025) doi:10.1007/s10734-025-01400-8; Foodbank Australia (2025) Hunger Report.</p>
+      <p>Privacy: answers you submit go to a private Google Sheet that only the student project team can open, and are deleted when the course ends in December 2026. We count page visits anonymously: no cookies, no personal data. Sources for the figures above: Kent et al. (2025) doi:10.1002/hpja.70037; Kent et al. (2022) doi:10.3390/nu14193956; Waite et al. (2025) doi:10.1007/s10734-025-01400-8; Foodbank Australia (2025) Hunger Report.</p>
     </div>
     <div>
       <p><strong>Need food support today?</strong> These services exist now and are free:</p>
@@ -209,8 +209,35 @@
 </div>
 <script>
 (function(){
-  // Optional: paste a Google Form link here to also collect sign-ups in a spreadsheet.
-  var GOOGLE_FORM_URL = "";
+  // Sign-ups and an anonymous visit count go to the team's private Google Sheet through a Google Form.
+  var FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSdC5tAdqqkSD_M4cdUw3iOmKM0Cz1QP0PCT-_bjquUA4hDfUg/formResponse";
+  var FIELD = { type:"entry.121781733", variant:"entry.1293836295", first_name:"entry.1926124624", contact:"entry.327341190",
+                campus:"entry.207865914", arrival:"entry.1715680743", dishes:"entry.223604846", diet:"entry.1565493096", evenings:"entry.568174952" };
+  var HEADLINES = { A: "free meals, cooked together, for students who just arrived in melbourne.",
+                    B: "a taste of home, cooked together, for students who just arrived in melbourne." };
+  var params = new URLSearchParams(location.search);
+  var LIVE = location.protocol === "https:" && !params.has("nolog");   // local previews and ?nolog never write to the sheet
+  var TEST = params.has("test");                                        // ?test marks rows as test rows so they are not counted
+  function store(k, v){ try{ if(v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); }catch(e){ return null; } }
+
+  // A/B headline (assumption D2): each browser is given one headline at random and keeps it.
+  var variant = (params.get("v") || "").toUpperCase();
+  if(variant !== "A" && variant !== "B"){ variant = store("kc-variant"); }
+  if(variant !== "A" && variant !== "B"){ variant = Math.random() < 0.5 ? "A" : "B"; store("kc-variant", variant); }
+  var headline = document.getElementById("headline");
+  if(headline) headline.textContent = HEADLINES[variant];
+
+  function send(row){
+    if(!LIVE) return Promise.resolve(false);
+    var body = new URLSearchParams();
+    if(TEST) row.type = "test-" + row.type;
+    Object.keys(row).forEach(function(k){ if(FIELD[k] && row[k]) body.append(FIELD[k], row[k]); });
+    return fetch(FORM_ACTION, { method:"POST", mode:"no-cors", body: body }).then(function(){ return true; }).catch(function(){ return false; });
+  }
+
+  // Visitor count (denominator for conversion): one anonymous row per browser, no personal data.
+  if(LIVE && (TEST || !store("kc-visit"))){ if(!TEST) store("kc-visit", "1"); send({ type:"visit", variant: variant }); }
+
   var form = document.getElementById('signup');
   var success = document.getElementById('success');
   var another = document.getElementById('another');
@@ -225,15 +252,7 @@
       if(el.type === 'checkbox'){ if(el.checked){ (data[el.name] = data[el.name] || []).push(el.value); } }
       else data[el.name] = el.value.trim();
     });
-    data.submittedAt = new Date().toISOString();
     return data;
-  }
-  function remember(key, entry){
-    try{
-      var list = JSON.parse(localStorage.getItem(key) || '[]');
-      list.push(entry);
-      localStorage.setItem(key, JSON.stringify(list));
-    }catch(e){ /* storage unavailable: the confirmation still shows */ }
   }
   function requiredOk(f){
     var ok = true;
@@ -250,15 +269,14 @@
     if(!requiredOk(form)){ note.textContent = 'Please fill in your name, campus, arrival and a way to reach you.'; note.classList.add('err'); return; }
     note.classList.remove('err');
     var entry = readForm(form);
-    remember('kitchen-circle-seats', entry);
-    document.getElementById('success-title').textContent = "you're in, " + (entry.firstName || 'friend') + '.';
-    form.hidden = true; success.hidden = false;
-    success.scrollIntoView({behavior:'smooth', block:'center'});
-    if(GOOGLE_FORM_URL){
-      var a = document.createElement('a'); a.className = 'btn btn-primary'; a.target = '_blank'; a.rel = 'noopener';
-      a.href = GOOGLE_FORM_URL; a.textContent = 'confirm on the sign-up sheet';
-      success.querySelector('.actions').appendChild(a);
-    }
+    var button = document.getElementById('submit-btn'); button.disabled = true; button.textContent = 'Sending…';
+    send({ type:"seat", variant: variant, first_name: entry.firstName, contact: entry.contact, campus: entry.campus, arrival: entry.arrival,
+           dishes: entry.dishes, diet: entry.diet, evenings: (entry.evenings || []).join(", ") }).then(function(){
+      button.disabled = false; button.textContent = 'Reserve my free seat';
+      document.getElementById('success-title').textContent = "You're in, " + (entry.firstName || 'friend') + '.';
+      form.hidden = true; success.hidden = false;
+      success.scrollIntoView({behavior:'smooth', block:'center'});
+    });
   });
   another.addEventListener('click', function(){
     form.reset(); success.hidden = true; form.hidden = false;
@@ -267,9 +285,11 @@
   mentorForm.addEventListener('submit', function(ev){
     ev.preventDefault();
     if(!requiredOk(mentorForm)){ mNote.textContent = 'Please add your name and email.'; return; }
-    remember('kitchen-circle-mentors', readForm(mentorForm));
-    mentorForm.reset();
-    mNote.textContent = 'Thank you. This prototype saves your interest on this device only.';
+    var m = readForm(mentorForm);
+    send({ type:"mentor", variant: variant, first_name: m.mentorName, contact: m.mentorContact, dishes: m.mentorDish }).then(function(){
+      mentorForm.reset();
+      mNote.textContent = 'Thank you. Your interest is recorded; we will email you if the pilot goes ahead.';
+    });
   });
 })();
 </script>
