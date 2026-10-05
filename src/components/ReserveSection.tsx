@@ -239,8 +239,8 @@ export default function ReserveSection() {
           </div>
         </div>
 
-        {/* right: the three-step form */}
-        <div className="rounded-3xl bg-[#FFF9F2] p-6 md:p-10">
+        {/* right: the three-step form (sticks beside the menu and FAQ on wide screens) */}
+        <div className="self-start rounded-3xl bg-[#FFF9F2] p-6 md:sticky md:top-8 md:p-10">
           {status === 'done' ? (
             <div>
               <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[#321C04] text-[#FFF9F2]">
